@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class UserController {
 
     @Autowired
     private UserRepository repository;
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public ResponseEntity getAll() {
@@ -37,7 +39,7 @@ public class UserController {
     @Transactional
     public ResponseEntity update(@RequestBody @Valid AtualizarUsuarioDTO dados) {
         var usuario = this.repository.getReferenceById(dados.id());
-        usuario.atualizarInformacoes(dados);
+        usuario.atualizarInformacoes(dados, passwordEncoder);
 
         return ResponseEntity.ok(new DetalhamentoUsuarioDTO(usuario));
     }

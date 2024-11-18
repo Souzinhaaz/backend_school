@@ -10,11 +10,13 @@ import com.example.project_school.repositories.AlunoRepository;
 import com.example.project_school.repositories.TurmaRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/alunos")
@@ -48,6 +50,15 @@ public class AlunoController {
         var aluno = this.alunoRepository.getReferenceById(id);
 
         return ResponseEntity.ok(new DetalhamentoAlunoDTO(aluno));
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity getCount () {
+        long count = this.alunoRepository.count();
+
+        var response = Map.of("total", count);
+
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping

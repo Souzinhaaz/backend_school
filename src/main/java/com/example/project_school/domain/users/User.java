@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity(name = "usuarios")
 @Table(name = "usuarios")
@@ -30,7 +31,7 @@ public class User {
     @Column(nullable = false)
     private String senha;
 
-    public void atualizarInformacoes(@Valid AtualizarUsuarioDTO dados) {
+    public void atualizarInformacoes(@Valid AtualizarUsuarioDTO dados, PasswordEncoder passwordEncoder) {
         if (dados.nome() != null) {
             this.nome = dados.nome();
         }
@@ -40,7 +41,7 @@ public class User {
         }
 
         if (dados.senha() != null) {
-            this.senha = dados.senha();
+            this.senha = passwordEncoder.encode(dados.senha());
         }
     }
 

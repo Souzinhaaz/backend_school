@@ -6,6 +6,7 @@ import com.example.project_school.dto.users.RegisterRequestDTO;
 import com.example.project_school.dto.users.ResponseDTO;
 import com.example.project_school.infra.security.TokenService;
 import com.example.project_school.repositories.UserRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,7 +38,7 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody RegisterRequestDTO body){
+    public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO body){
         Optional<User> user = this.repository.findByEmail(body.email());
 
         if(user.isEmpty()) {

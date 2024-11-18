@@ -1,4 +1,14 @@
 package com.example.project_school.dto.users;
 
-public record RegisterRequestDTO (String nome, String email, String senha) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record RegisterRequestDTO (
+        @NotBlank
+        String nome,
+        @NotBlank
+        String email,
+        @NotBlank
+        String senha
+) {
 }
